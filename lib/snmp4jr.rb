@@ -1,5 +1,4 @@
 require 'java'
-require 'log4j-1.2.9.jar'
 require 'snmp4j-2.3.0.jar'
 require 'snmp4j-agent-2.2.2.jar'
 
