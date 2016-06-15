@@ -13,14 +13,12 @@ module SNMP4JR
       @oid   = variable_binding.oid.to_s
       @value = variable_binding.variable.to_s
 
-      format_smi_object
+      format_smi_object if has_smi_syntax?
     end
 
     private
 
     def format_smi_object
-      return unless has_smi_syntax?
-
       # If we have a DateAndTime object, parse it into a usable format.
       if date_and_time_object?
         date_and_time = SNMP4JR::SMI::OctetString.new(variable_binding.variable)
