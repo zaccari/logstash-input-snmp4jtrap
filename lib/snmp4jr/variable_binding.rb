@@ -22,7 +22,7 @@ module SNMP4JR
       return unless has_smi_syntax?
 
       # If we have a DateAndTime object, parse it into a usable format.
-      if smi_syntax_clause == DATE_AND_TIME
+      if date_and_time_object?
         date_and_time = SNMP4JR::SMI::OctetString.new(variable_binding.variable)
 
         # Parse the SNMPv2-TC DateAndTime syntax into a datetime object.
@@ -34,9 +34,17 @@ module SNMP4JR
 
       # Addresses are (correctly) rendered like "ab:cd:ef:gh...",
       # we want "abcd:efgh...."
-      elsif smi_syntax_clause == IPV6_ADDRESS
+      elsif ipv6_address_object?
         @value = value.gsub(/(..):(..)/,'\1\2')
       end
+    end
+
+    def date_and_time_object?
+      smi_syntax_clause == DATE_AND_TIME
+    end
+
+    def ipv6_address_object?
+      smi_syntax_clause == IPV6_ADDRESS
     end
 
     def has_smi_syntax?
