@@ -30,7 +30,7 @@ module SNMP4JR
         calendar = SNMP4JR::Agent::MO::Snmp::DateAndTime.make_calendar(date_and_time)
 
         # Convert datetime to Unix Epoch
-        @value = calendar.time_in_millis * 1000
+        @value = calendar.time_in_millis / 1000
 
       # Addresses are (correctly) rendered like "ab:cd:ef:gh...",
       # we want "abcd:efgh...."
