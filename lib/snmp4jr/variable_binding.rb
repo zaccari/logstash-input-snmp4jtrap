@@ -13,30 +13,30 @@ module SNMP4JR
       @oid   = variable_binding.oid.to_s
       @value = variable_binding.variable.to_s
 
-      format_smi_object
+      format_smi_object if has_smi_syntax?
     end
 
     private
 
     def format_smi_object
-      return unless has_smi_syntax?
-
       # If we have a DateAndTime object, parse it into a usable format.
-      if smi_syntax_clause == DATE_AND_TIME
-        date_and_time = SNMP4JR::SMI::OctetString.new(variable_binding.variable)
-
-        # Parse the SNMPv2-TC DateAndTime syntax into a datetime object.
-        # http://www.snmp4j.org/agent/doc/org/snmp4j/agent/mo/snmp/DateAndTime.html
-        calendar = SNMP4JR::Agent::MO::Snmp::DateAndTime.make_calendar(date_and_time)
-
-        # Convert datetime to Unix Epoch
-        @value = calendar.time_in_millis * 1000
+      if date_and_time_object?
+        date_and_time = variable_binding.variable.to_s
+        @value = SNMP4JR::DateTimeConverter.new(date_and_time).to_i
 
       # Addresses are (correctly) rendered like "ab:cd:ef:gh...",
       # we want "abcd:efgh...."
-      elsif smi_syntax_clause == IPV6_ADDRESS
+      elsif ipv6_address_object?
         @value = value.gsub(/(..):(..)/,'\1\2')
       end
+    end
+
+    def date_and_time_object?
+      smi_syntax_clause == DATE_AND_TIME
+    end
+
+    def ipv6_address_object?
+      smi_syntax_clause == IPV6_ADDRESS
     end
 
     def has_smi_syntax?
