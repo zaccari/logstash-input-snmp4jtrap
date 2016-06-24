@@ -55,6 +55,7 @@ module SNMP4JR
 end
 
 require 'snmp4jr/mib_manager'
+require 'snmp4jr/date_time_converter'
 require 'snmp4jr/variable_binding'
 require 'snmp4jr/message'
 require 'snmp4jr/trap_listener'

@@ -21,14 +21,8 @@ module SNMP4JR
     def format_smi_object
       # If we have a DateAndTime object, parse it into a usable format.
       if date_and_time_object?
-        date_and_time = SNMP4JR::SMI::OctetString.new(variable_binding.variable)
-
-        # Parse the SNMPv2-TC DateAndTime syntax into a datetime object.
-        # http://www.snmp4j.org/agent/doc/org/snmp4j/agent/mo/snmp/DateAndTime.html
-        calendar = SNMP4JR::Agent::MO::Snmp::DateAndTime.make_calendar(date_and_time)
-
-        # Convert datetime to Unix Epoch
-        @value = calendar.time_in_millis / 1000
+        date_and_time = variable_binding.variable.to_s
+        @value = SNMP4JR::DateTimeConverter.new(date_and_time).to_i
 
       # Addresses are (correctly) rendered like "ab:cd:ef:gh...",
       # we want "abcd:efgh...."
