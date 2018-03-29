@@ -113,9 +113,17 @@ module SNMP4JR
       @minutes       = octets[MINUTES].hex
       @seconds       = octets[SECONDS].hex
       @deci_seconds  = octets[DECI_SECONDS].hex
-      @utc_direction = octets[UTC_DIRECTION].hex.chr
-      @utc_hours     = octets[UTC_HOURS].hex
-      @utc_minutes   = octets[UTC_MINUTES].hex
+      @utc_direction = utc_direction(octets[UTC_DIRECTION])
+      @utc_hours     = utc_hex(octets[UTC_HOURS])
+      @utc_minutes   = utc_hex(octets[UTC_MINUTES])
+    end
+
+    def utc_direction(direction)
+      direction.nil? ? '+' : direction.hex.chr
+    end
+
+    def utc_hex(hex_num)
+      hex_num.nil? ? 0 : hex_num.hex
     end
 
     def padded(input)
