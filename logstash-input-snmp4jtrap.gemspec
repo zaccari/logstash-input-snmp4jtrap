@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name          = 'logstash-input-snmp4jtrap'
-  s.version       = '1.1.0'
+  s.version       = '1.1.1'
   s.authors       = ['Michael Zaccari']
   s.email         = ['michael.zaccari@accelerated.com']
 
