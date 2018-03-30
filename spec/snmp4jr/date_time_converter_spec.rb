@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'SNMP4JR > DATE_TIME > Parse SNMP date-time OID' do
+RSpec.describe 'SNMP4JR > DATE_TIME Converter> Parse SNMP date-time OID' do
 
   let(:date_with_zone)    { SNMP4JR::DateTimeConverter.new('07:e0:06:17:0d:18:01:00:2d:04:00') }
   let(:date_without_zone) { SNMP4JR::DateTimeConverter.new('07:e0:06:17:0d:18:01:00') }
